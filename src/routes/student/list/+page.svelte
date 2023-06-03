@@ -4,6 +4,7 @@
 
     import FlashMessage from "$lib/messages.svelte";
     import { page } from "$app/stores";
+    import Seo from "$lib/Seo.svelte";
     const status = $page.url.searchParams.get("status");
     // export let statusMessage = {type:'', message:''};
     // $: {
@@ -14,6 +15,12 @@
     //     }
     // }
 </script>
+<Seo 
+    title="Student list | Lean Svelte" 
+    description="List of students" 
+    type="Students" 
+    name="Svelte website student list"
+/>
 
 <h1>Studens</h1>
 <FlashMessage messageCode={status ? status : ""} />

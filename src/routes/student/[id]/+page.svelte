@@ -6,21 +6,23 @@
     import * as yup from "yup";
 
     const validationSchema = yup.object().shape({
-        name: yup.string().required('Please enter a name'),
-        email: yup.string().email().required('Please enter a valid email'),
-        phone: yup.string().required('Please enter phone')
+        name: yup.string().required("Please enter a name"),
+        email: yup.string().email().required("Please enter a valid email"),
+        phone: yup.string().required("Please enter phone"),
     });
     const { form, errors, handleChange, handleSubmit } = createForm({
-        initialValues: {...user},
+        initialValues: { ...user },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-            _updateStudent(values)
-            .then((resp)=> {goto('list/?status=2');})
-            .catch((error) => {})
-        }
+            updateStudent(values)
+                .then((resp) => {
+                    goto("list/?status=2");
+                })
+                .catch((error) => {});
+        },
     });
 
-    const _updateStudent = async (formData: any) => {
+    const updateStudent = async (formData: any) => {
         return await fetch(
             `https://jsonplaceholder.typicode.com/users/${formData.id}`,
             {
@@ -37,42 +39,54 @@
 <h1>{user.name}</h1>
 
 <form method="POST" on:submit|preventDefault={handleSubmit}>
-    <label for="name">Name:</label><br />
-    <input
-        type="text"
-        id="name"
-        name="name"
-        bind:value={$form.name}
-        on:change={handleChange}
-    />
-    <br />
-    {#if $errors.name}<small>{$errors.name}</small>{/if}
-    <br /><br />
+    <div class="form-group">
+        <label for="student-name">Name:</label>
+        <input
+            type="text"
+            class="form-control"
+            id="student-name"
+            placeholder="Enter name"
+            bind:value={$form.name}
+            on:change={handleChange}
+            class:is-invalid={$errors.name}
+        />
+        {#if $errors.name}<div class="invalid-feedback">
+                {$errors.name}
+            </div>{/if}
+    </div>
 
-    <label for="email">Email:</label><br />
-    <input
-        type="text"
-        id="email"
-        name="email"
-        bind:value={$form.email}
-        on:change={handleChange}
-    />
-    <br />
-    {#if $errors.email}<small>{$errors.email}</small>{/if}
-    <br /><br />
+    <div class="form-group">
+        <label for="student-email">Email address:</label>
+        <input
+            type="email"
+            class="form-control"
+            id="student-email"
+            placeholder="Enter email"
+            bind:value={$form.email}
+            on:change={handleChange}
+            class:is-invalid={$errors.email}
+        />
+        {#if $errors.email}<div class="invalid-feedback">
+                {$errors.email}
+            </div>{/if}
+    </div>
 
-    <label for="phone">Phone:</label><br />
-    <input
-        type="text"
-        id="phone"
-        name="phone"
-        bind:value={$form.phone}
-        on:change={handleChange}
-    />
-    <br />
-    {#if $errors.phone}<small>{$errors.phone}</small>{/if}
-    <br /><br />
+    <div class="form-group">
+        <label for="student-phone">Phone:</label>
+        <input
+            type="text"
+            class="form-control"
+            id="student-phone"
+            placeholder="Enter phone"
+            bind:value={$form.phone}
+            on:change={handleChange}
+            class:is-invalid={$errors.phone}
+        />
+        {#if $errors.phone}<div class="invalid-feedback">
+                {$errors.phone}
+            </div>{/if}
+    </div>
     <input type="hidden" name="id" bind:value={$form.id} />
-
-    <button>Submit</button>
+    <br />
+    <button class="btn btn-primary" type="submit">Save</button>
 </form>

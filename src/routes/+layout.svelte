@@ -1,12 +1,13 @@
 <script>
     import Navbar from "$lib/Navbar.svelte";
     import Footer from "$lib/Footer.svelte";
+    import { navigating } from "$app/stores";
 </script>
 
 <div class="app">
     <Navbar />
     <div class="container">
-        <slot />
+        {#if $navigating} Loading... {:else} <slot /> {/if}
     </div>
     <Footer />
 </div>
