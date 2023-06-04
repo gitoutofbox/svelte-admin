@@ -1,5 +1,6 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
+    import Seo from "$lib/Seo.svelte";
     export let data;
     const { user } = data;
     import { createForm } from "svelte-forms-lib";
@@ -36,9 +37,16 @@
     };
 </script>
 
+<Seo 
+    title="{user.name} | Learn Svelte" 
+    description="List of students" 
+    type="Students" 
+    name="Svelte website student list"
+/>
+
 <h1>{user.name}</h1>
 
-<form method="POST" on:submit|preventDefault={handleSubmit}>
+<form method="POST" on:submit|preventDefault={handleSubmit} novalidate>
     <div class="form-group">
         <label for="student-name">Name:</label>
         <input

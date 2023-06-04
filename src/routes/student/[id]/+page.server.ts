@@ -1,4 +1,6 @@
-export const load = async ({ params }) => {
+export const load = async ({ params, cookies }) => {
+    const hasAccess = cookies.get('hasAccess');
+    console.log(hasAccess)
     const getUser = async () => {
         const res = await fetch(`https://jsonplaceholder.typicode.com/users/${params.id}`);
         const user = await res.json();

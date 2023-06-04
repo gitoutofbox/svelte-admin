@@ -16,7 +16,7 @@
     // }
 </script>
 <Seo 
-    title="Student list | Lean Svelte" 
+    title="Student list | Learn Svelte" 
     description="List of students" 
     type="Students" 
     name="Svelte website student list"
