@@ -3,38 +3,48 @@
     import Seo from "$lib/Seo.svelte";
     import { createForm } from "svelte-forms-lib";
     import * as yup from "yup";
+    let serverError = "";
+    let isLoginProgressing = false;
 
     const validationSchema = yup.object().shape({
-        email: yup.string().email('Invalid email').required("Please enter a valid email"),
+        email: yup
+            .string()
+            .email("Invalid email")
+            .required("Please enter a valid email"),
         password: yup.string().required("Please enter password"),
     });
     const { form, errors, handleChange, handleSubmit } = createForm({
         initialValues: { email: "", password: "" },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-            onsubmit: onSubmit(values).then((isSuccess) => {
-                if (isSuccess) {
-                    goto("student/list");
-                } else {
-                    alert()
-                }
-            }) .catch(error => {
-                alert(error)
-            });
+            serverError = "";
+            onsubmit: onFormSubmit(values)
+                .then((isSuccess) => {
+                    if (isSuccess) {
+                        goto("student/list");
+                    }
+                })
+                .catch((error) => {
+                    serverError = error;
+                });
         },
     });
 
-    const onSubmit = async (formData: any) => {
+    const onFormSubmit = async (formData: any) => {
+        isLoginProgressing = true;
         return await new Promise((resolve, reject) => {
             setTimeout(() => {
-                if(formData.email === 'admin' && formData.password === 'admin'){
+                if (
+                    formData.email === "admin@email.com" &&
+                    formData.password === "admin"
+                ) {
                     resolve(true);
                 } else {
-                    reject('invalid credentials')
+                    reject("Invalid credentials. Use admin@email.com/admin");
                 }
                 console.log(formData);
-                
-            }, 1000);
+                isLoginProgressing = false;
+            }, 3000);
         });
     };
 </script>
@@ -55,10 +65,19 @@
             />
         </div>
         <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-            <form method="POST" on:submit|preventDefault={handleSubmit} novalidate>
+            {#if serverError}
+                <div class="alert alert-danger" role="alert">
+                    {serverError}
+                </div>
+            {/if}
+            <div class="text-secondary">Credentials: admin@email.com/admin</div>
+            <form
+                method="POST"
+                on:submit|preventDefault={handleSubmit}
+                novalidate
+            >
                 <div class="form-group">
-                    <label class="sr-only" for="userEmail">Email address</label
-                    >
+                    <label class="sr-only" for="userEmail">Email address</label>
                     <input
                         type="email"
                         class="form-control"
@@ -71,7 +90,7 @@
                     />
                     {#if $errors.email}
                         <div class="invalid-feedback">
-                        {$errors.email}
+                            {$errors.email}
                         </div>
                     {/if}
                 </div>
@@ -90,12 +109,21 @@
                     />
                     {#if $errors.password}
                         <div class="invalid-feedback">
-                        {$errors.password}
+                            {$errors.password}
                         </div>
                     {/if}
                 </div>
                 <br />
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                    disabled={isLoginProgressing}
+                >
+                    Submit
+                    {#if isLoginProgressing}
+                        <div class="spinner-border spinner-border-sm text-light" role="status"></div>
+                    {/if}
+                </button>
             </form>
         </div>
     </div>
