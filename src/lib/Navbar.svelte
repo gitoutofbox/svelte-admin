@@ -1,9 +1,16 @@
 <script>
+    import { goto } from "$app/navigation";
     import { page } from "$app/stores";
     $: routeId = $page.route.id;
     // $: {
     //     console.log(routeId)
     // }
+    const signOut = () => {
+        goto('/login?signout=1');
+    }
+    const signIn = () => {
+        goto('/login');
+    }
 </script>
 
 <nav>
@@ -12,6 +19,10 @@
         <li><a href="/student/list" class:active={routeId === '/student/list' || routeId === '/student/[id]'}>Students</a></li>
         <li><a href="#contact">Contact</a></li>
         <li><a href="#about">About</a></li>
+        <li class="btn-wrap">
+            <button class="btn btn-link" on:click={signOut}>Logout</button>
+            <button class="btn btn-link" on:click={signIn}>Login</button>
+        </li>
     </ul>
 </nav>
 
@@ -39,8 +50,18 @@
         text-decoration: none;
     }
 
-    li a:hover:not(.active) {
+    li a:hover:not(.active), li.btn-wrap button:hover {
         background-color: #111;
+    }
+
+    li.btn-wrap {
+        float: right;  
+    }
+    li.btn-wrap button {
+        color: #fff; 
+        text-decoration: none;
+        padding: 14px 16px;
+        margin: 0;
     }
 
     .active {
