@@ -2,9 +2,10 @@
     import { goto } from "$app/navigation";
     import { page } from "$app/stores";
     $: routeId = $page.route.id;
-    // $: {
-    //     console.log(routeId)
-    // }
+
+    $: {
+        // console.log('isLoggedIn', $page.data.auth)
+    }
     const signOut = () => {
         goto('/login?signout=1');
     }
@@ -20,8 +21,11 @@
         <li><a href="#contact">Contact</a></li>
         <li><a href="#about">About</a></li>
         <li class="btn-wrap">
+            {#if $page?.data?.auth?.isLoggedIn}
             <button class="btn btn-link" on:click={signOut}>Logout</button>
+            {:else}
             <button class="btn btn-link" on:click={signIn}>Login</button>
+            {/if}
         </li>
     </ul>
 </nav>
