@@ -14,20 +14,25 @@ const validationSchema = yup.object().shape({
             (d) => `Please use admin@email.com`,
             (value) => value == null || value === 'admin@email.com'),
     password: yup.string()
-    .required("Please enter password")
-    .test('is-admin',
+        .required("Please enter password")
+        .test('is-admin',
             (d) => `Please use admin as password`,
             (value) => value == null || value === 'admin'),
 });
 
-const makeLogin = (userData: {[k: string]: FormDataEntryValue;}, cookies: Cookies) => {
-    cookies.set('isLoggedIn', 'true', {path: "/", sameSite: 'strict'});
+const makeLogin = (userData: { [k: string]: FormDataEntryValue; }, cookies: Cookies, minutes = 15) => {
+    let date = new Date();
+    date.setTime(date.getTime() + (minutes * 60 * 1000));
+    // date = date.toGMTString();
+    cookies.set('isLoggedIn', 'true', { path: "/", sameSite: 'strict', expires: date});
 }
+
+
 export const actions = {
     login: async ({ request, cookies }) => {
         let err: any = { email: '', password: '' };
         let isError = true;
-        
+
         const formData = Object.fromEntries(await request.formData());
         try {
             const validation = await validationSchema.validate(formData, { abortEarly: false });
@@ -39,7 +44,7 @@ export const actions = {
                 err[error.path] = error.message;
             });
         }
-        if(isError) {
+        if (isError) {
             return {
                 hasError: isError,
                 formData,
