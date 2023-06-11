@@ -50,7 +50,7 @@
     <div class="col">
         <h1>Studens</h1>
     </div>
-    <div class="col-2 my-auto">
+    <div class="col-2 my-auto text-end">
         <a class="link-dark" href="/student/create">+ Create</a>
     </div>
 </div>

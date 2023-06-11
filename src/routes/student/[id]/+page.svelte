@@ -53,7 +53,9 @@
             }
         );
     };
-
+    const cancel = () => {
+        goto("list")
+    }
 </script>
 {#if $form.id}
 <Seo 
@@ -71,7 +73,11 @@
 />
 {/if}
 
+{#if $form.id}
 <h1>{user.name}</h1>
+{:else}
+<h1>Create student</h1>
+{/if}
 
 <form method="POST" on:submit|preventDefault={handleSubmit} novalidate>
     <div class="form-group">
@@ -124,4 +130,5 @@
     <input type="hidden" name="id" bind:value={$form.id} />
     <br />
     <button class="btn btn-primary" type="submit">Save</button>
+    <button class="btn btn-default" type="button" on:click={cancel}>Cancel</button>
 </form>
