@@ -2,6 +2,15 @@
     import Navbar from "$lib/Navbar.svelte";
     import Footer from "$lib/Footer.svelte";
     import { navigating } from "$app/stores";
+    import { globalLoaderStore } from "../store/store";
+    import { onDestroy } from "svelte";
+    import GlobalLoader from "$lib/Global-loader.svelte";
+    let showGlobalLoader = false;
+
+    const unsubscribe = globalLoaderStore.subscribe((value) => {
+        showGlobalLoader = value;
+    });
+    onDestroy(unsubscribe);
 </script>
 
 <div class="app">
@@ -10,6 +19,7 @@
         {#if $navigating} Loading... {:else} <slot /> {/if}
     </div>
     <Footer />
+    <GlobalLoader showLoader={showGlobalLoader} />
 </div>
 
 <style>

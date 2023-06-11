@@ -20,7 +20,7 @@ const validationSchema = yup.object().shape({
             (value) => value == null || value === 'admin'),
 });
 
-const makeLogin = (userData: { [k: string]: FormDataEntryValue; }, cookies: Cookies, minutes = 15) => {
+const makeLogin = (userData: { [k: string]: FormDataEntryValue; }, cookies: Cookies, minutes = 60) => {
     let date = new Date();
     date.setTime(date.getTime() + (minutes * 60 * 1000));
     // date = date.toGMTString();

@@ -7,7 +7,7 @@
 
     export let data;
     const { students } = data;
-
+    import { globalLoaderStore } from '../../../store/store';
     import FlashMessage from "$lib/messages.svelte";
     import { page } from "$app/stores";
     import Seo from "$lib/Seo.svelte";
@@ -22,6 +22,8 @@
         student = { ...studentItem };
     };
     const deleteStudent = async () => {
+        globalLoaderStore.set(true);
+        showModal = false;
         try {
             const resp = await fetch(`${PUBLIC_API_BASE}/users/${student.id}`, {
                 method: "DELETE",
@@ -29,11 +31,11 @@
                     "Content-type": "application/json; charset=UTF-8",
                 },
             });
-            showModal = false;
             status = '5';
+            globalLoaderStore.set(false);
         } catch (error) {
             status = '6';
-            showModal = false;
+            globalLoaderStore.set(false);
         }
     };
 </script>

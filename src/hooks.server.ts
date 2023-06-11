@@ -1,17 +1,17 @@
 import { redirect } from "@sveltejs/kit";
 
 declare global {
-	namespace App {
-		interface Locals {
-			auth: any
-		}
+    namespace App {
+        interface Locals {
+            auth: any
+        }
 
-		interface Platform {}
+        interface Platform { }
 
-		interface Session {}
+        interface Session { }
 
-		interface Stuff {}
-	}
+        interface Stuff { }
+    }
 }
 
 const unProtectedRoutes = ['/', '/login', '/about', '/contact'];
@@ -31,8 +31,9 @@ export const handle = async ({ event, resolve }) => {
     const query = event.url.searchParams.get('signout');
     if (Boolean(query) == true) {
         await event.cookies.delete('isLoggedIn', { path: '/' });
-  
+
         throw redirect(303, '/login');
     }
+    event.setHeaders({ 'appname': 'student-admin' })
     return resolve(event)
 }
