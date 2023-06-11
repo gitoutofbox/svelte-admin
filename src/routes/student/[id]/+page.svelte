@@ -1,5 +1,6 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
+    import { PUBLIC_API_BASE } from "$env/static/public";
     import Seo from "$lib/Seo.svelte";
     export let data;
     const { user } = data;
@@ -15,17 +16,21 @@
         initialValues: { ...user },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-            updateStudent(values)
-                .then((resp) => {
+            if(values.id) {
+                updateStudent(values).then((resp) => {
                     goto("list/?status=2");
-                })
-                .catch((error) => {});
+                }).catch((error) => {});
+            } else {
+                createStudent(values).then((resp) => {
+                    goto("list/?status=1");
+                }).catch((error) => {});
+            }
         },
     });
 
     const updateStudent = async (formData: any) => {
         return await fetch(
-            `https://jsonplaceholder.typicode.com/users/${formData.id}`,
+            `${PUBLIC_API_BASE}/users/${formData.id}`,
             {
                 method: "PATCH",
                 body: JSON.stringify(formData),
@@ -35,14 +40,36 @@
             }
         );
     };
-</script>
 
+    const createStudent = async (formData: any) => {
+        return await fetch(
+            `${PUBLIC_API_BASE}/users`,
+            {
+                method: "POST",
+                body: JSON.stringify(formData),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8",
+                },
+            }
+        );
+    };
+
+</script>
+{#if $form.id}
 <Seo 
     title="{user.name} | Learn Svelte" 
     description="List of students" 
     type="Students" 
     name="Svelte website student list"
 />
+{:else}
+<Seo 
+    title="Create student | Learn Svelte" 
+    description="List of students" 
+    type="Students" 
+    name="Svelte website student list"
+/>
+{/if}
 
 <h1>{user.name}</h1>
 

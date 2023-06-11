@@ -22,7 +22,15 @@
     name="Svelte website student list"
 />
 
-<h1>Studens</h1>
+<div class="row">
+    <div class="col">
+        <h1>Studens</h1>
+    </div>
+    <div class="col-2">
+        <a href="/student/create">Create</a>
+    </div>
+</div>
+
 <FlashMessage messageCode={status ? status : ""} />
 <!-- <h3 class="status-message status-message--{statusMessage.type}">{statusMessage.message}</h3> -->
 <table>

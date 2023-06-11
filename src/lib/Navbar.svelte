@@ -16,7 +16,7 @@
 
 <nav>
     <ul>
-        <li><a class="active" href="/" class:active={routeId === '/' || routeId === '/login'}>Home</a></li>
+        <li><a class="active" href="/" class:active={routeId === '/'}>Home</a></li>
         <li><a href="/student/list" class:active={routeId === '/student/list' || routeId === '/student/[id]'}>Students</a></li>
         <li><a href="#contact">Contact</a></li>
         <li><a href="#about">About</a></li>
@@ -24,7 +24,7 @@
             {#if $page?.data?.auth?.isLoggedIn}
             <button class="btn btn-link" on:click={signOut}>Logout</button>
             {:else}
-            <button class="btn btn-link" on:click={signIn}>Login</button>
+            <button class="btn btn-link" class:btn-success={routeId === '/login'} on:click={signIn}>Login</button>
             {/if}
         </li>
     </ul>
