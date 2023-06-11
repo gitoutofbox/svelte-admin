@@ -1,27 +1,49 @@
-<script>
+<script lang="ts">
+    type Student = {
+        id: string | number;
+        name: string;
+        phone: number | string;
+    };
+
     export let data;
     const { students } = data;
 
     import FlashMessage from "$lib/messages.svelte";
     import { page } from "$app/stores";
     import Seo from "$lib/Seo.svelte";
-    const status = $page.url.searchParams.get("status");
-    // export let statusMessage = {type:'', message:''};
-    // $: {
-    //     const status = $page.url.searchParams.get('status');
-    //     if(status) {
-    //         statusMessage.type = messages[status].type;
-    //         statusMessage.message = messages[status].message;
-    //     }
-    // }
+    import Modal from "$lib/Modal.svelte";
+    import { PUBLIC_API_BASE } from "$env/static/public";
+    let status = $page.url.searchParams.get("status");
+
+    let showModal = false;
+    let student: Student;
+    const askDeleteConfirmation = (studentItem: Student) => {
+        showModal = true;
+        student = { ...studentItem };
+    };
+    const deleteStudent = async () => {
+        try {
+            const resp = await fetch(`${PUBLIC_API_BASE}/users/${student.id}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8",
+                },
+            });
+            showModal = false;
+            status = '5';
+        } catch (error) {
+            status = '6';
+            showModal = false;
+        }
+    };
 </script>
-<Seo 
-    title="Student list | Learn Svelte" 
-    description="List of students" 
-    type="Students" 
+
+<Seo
+    title="Student list | Learn Svelte"
+    description="List of students"
+    type="Students"
     name="Svelte website student list"
 />
-
 <FlashMessage messageCode={status ? status : ""} />
 
 <div class="row">
@@ -39,6 +61,7 @@
         <th>Name</th>
         <th>Email</th>
         <th>Phone</th>
+        <th>Action</th>
     </tr>
     {#await students}
         <p>Working...</p>
@@ -51,12 +74,28 @@
                 </td>
                 <td>{student.email}</td>
                 <td>{student.phone}</td>
+                <td>
+                    <button
+                        class="btn btn-anchor"
+                        on:click={() => askDeleteConfirmation(student)}
+                        >Delete</button
+                    >
+                </td>
             </tr>
         {/each}
     {:catch error}
         <p>{error}</p>
     {/await}
 </table>
+
+<Modal bind:showModal>
+    <h2 slot="header">Modal</h2>
+    Are you sure you want to delete {student?.name}?
+    <div slot="footer">
+        <button class="btn btn-danger" on:click={deleteStudent}>Yes</button>
+        <button class="btn btn-default" on:click={() => showModal = false}>No</button>
+    </div>
+</Modal>
 
 <style>
     table {
