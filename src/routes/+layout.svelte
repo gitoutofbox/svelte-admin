@@ -5,6 +5,8 @@
     import { globalLoaderStore } from "../store/store";
     import { onDestroy } from "svelte";
     import GlobalLoader from "$lib/Global-loader.svelte";
+    import LoadingIndicator from '$lib/Loading-indicator.svelte';
+
     let showGlobalLoader = false;
 
     const unsubscribe = globalLoaderStore.subscribe((value) => {
@@ -16,7 +18,7 @@
 <div class="app">
     <Navbar />
     <div class="container">
-        {#if $navigating} Loading... {:else} <slot /> {/if}
+        {#if $navigating} <LoadingIndicator /> {:else} <slot /> {/if}
     </div>
     <Footer />
     <GlobalLoader showLoader={showGlobalLoader} />
