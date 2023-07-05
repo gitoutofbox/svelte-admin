@@ -7,17 +7,18 @@
 
     export const messages: Array<Message> = [
         { code: "1", type: "success", message: "Added successfully" },
-        { code: "2", type: "error", message: "Failed to add" },
+        { code: "2", type: "danger", message: "Failed to add" },
         { code: "3", type: "success", message: "Updated successfully" },
-        { code: "4", type: "error", message: "Failed  to update" },
+        { code: "4", type: "danger", message: "Failed  to update" },
         { code: "5", type: "success", message: "Deleted successfully" },
-        { code: "6", type: "error", message: "Failed to delete" },
+        { code: "6", type: "danger", message: "Failed to delete" },
+        { code: "7", type: "success", message: "Send succesfully" },
+        { code: "8", type: "danger", message: "Failed to send" },
     ];
     export let messageCode: string;
     let flashMessage: Message;
     $: {
         if (messageCode) {
-            console.log('aaaaaaaaa')
             const messageObj = messages.filter(
                 (item) => item.code === messageCode
             );

@@ -1,17 +1,12 @@
 <script lang="ts">
     import { enhance } from "$app/forms";
-    import { goto } from "$app/navigation";
     import Seo from "$lib/Seo.svelte";
-    import type { ActionData } from "./$types";
+    export let form;
     let serverError = "";
     let isLoginProgressing = false;
-
-    // export let data;
-    export let form;
+    
     // $: {
-    //     if(form?.success) {
-    //         goto('/student/list')
-    //     }
+    //     console.log(form)
     // }
 </script>
 

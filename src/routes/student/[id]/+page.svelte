@@ -18,7 +18,7 @@
         onSubmit: (values) => {
             if(values.id) {
                 updateStudent(values).then((resp) => {
-                    goto("list/?status=2");
+                    goto("list/?status=3");
                 }).catch((error) => {});
             } else {
                 createStudent(values).then((resp) => {
