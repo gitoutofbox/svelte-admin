@@ -112,16 +112,17 @@
             url(https://res.cloudinary.com/dqifboxk5/image/upload/v1686209968/contact-us-2_y8zzx7.jpg)
                 no-repeat center;
         background-size: cover;
-        min-height: 100vh;
+        height: calc(100vh - 150px);
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        margin-top: 15px;
     }
     .form-main .main-wrapper {
         border-radius: 10px;
         padding: 45px;
-        width: 40%;
+        width: 70%;
         box-shadow: 0 0 5px 5px #00000020;
         backdrop-filter: blur(5px);
         background-color: #ffffff85;

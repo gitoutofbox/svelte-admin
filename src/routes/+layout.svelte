@@ -2,22 +2,29 @@
     import Navbar from "$lib/Navbar.svelte";
     import Footer from "$lib/Footer.svelte";
     import { navigating } from "$app/stores";
-    import { globalLoaderStore } from "../store/store";
+    import { globalLoaderStore, containerClassStore } from "../store/store";
     import { onDestroy } from "svelte";
     import GlobalLoader from "$lib/Global-loader.svelte";
-    import LoadingIndicator from '$lib/Loading-indicator.svelte';
+    import LoadingIndicator from "$lib/Loading-indicator.svelte";
 
     let showGlobalLoader = false;
+    let containerClass = "";
 
-    const unsubscribe = globalLoaderStore.subscribe((value) => {
+    const globalLoader$ = globalLoaderStore.subscribe((value) => {
         showGlobalLoader = value;
     });
-    onDestroy(unsubscribe);
+    const containerClass$ = containerClassStore.subscribe((value) => {
+        containerClass = value;
+    });
+    onDestroy(() => {
+        globalLoader$();
+        containerClass$();
+    });
 </script>
 
 <div class="app">
     <Navbar />
-    <div class="container">
+    <div class={containerClass ? containerClass : 'container'}>
         {#if $navigating} <LoadingIndicator /> {:else} <slot /> {/if}
     </div>
     <Footer />
@@ -31,7 +38,7 @@
         flex-direction: column;
     }
     .container {
-        min-height: calc(100vh - 50px - 50px - 16px);
+        min-height: calc(100vh - 50px - 50px - 32px);
         margin-top: 15px;
         margin-bottom: 15px;
     }

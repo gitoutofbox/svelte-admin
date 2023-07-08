@@ -25,6 +25,7 @@
 		"express-session": "^1.17.3",
 		"svelte-forms-lib": "^2.0.1",
 		"svelte-navigator": "^3.2.2",
+		"svelte-parallax": "^0.6.0",
 		"svelte-routing": "^1.8.9",
 		"yup": "^1.2.0"
 	}
