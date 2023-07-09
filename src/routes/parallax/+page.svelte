@@ -8,10 +8,15 @@
     
     let scrollY: number;
     let speed = 5;
+    let windowOffsetHeight: number;
     onMount(() => {
         document.body.scrollIntoView();
         containerClassStore.set("full-width");
+        windowOffsetHeight = document.body.offsetHeight;
   });
+  $: {
+    // console.log('scrollY', scrollY)
+  }
   onDestroy(() => {
     containerClassStore.set('');
   });
@@ -24,13 +29,13 @@
     <div class="gate">
         <div
             class="gate-left"
-            style:transform={`translate3d(${scrollY * speed * -1}px, 0, 0)`}
+            style:left={`${scrollY * speed * -1}px`}
         >
             <img src="/laptop/gate-left.jpg" alt="laptop" class="laptop-4" />
         </div>
         <div
             class="gate-right"
-            style:transform={`translate3d(${scrollY * speed}px, 0, 0)`}
+            style:right={`${scrollY * speed * -1}px`}
         >
             <img src="/laptop/gate-right.jpg" alt="laptop" class="laptop-4" />
         </div>
@@ -52,41 +57,20 @@
             </ParallaxLayer>
         {/each}
 
-        <!-- <ParallaxLayer offset={1} rate={2.5} style="display: flex; justify-content: flex-start;">
-		<div style="background-color: #000; opacity: 1; width: 50%; height: 100%;">
-            <img src="/laptop/2.jpg" alt="laptop2" class="laptop-2" />
-        </div>
-	</ParallaxLayer>
-	
-	<ParallaxLayer offset={1} rate={-2.5} style="display: flex; justify-content: flex-end;">
-		<div style="background-color: black; opacity: 1; width: 50%; height: 100%;">
-            <img src="/laptop/3.jpg" alt="laptop3" class="laptop-3" />
-        </div>
-	</ParallaxLayer> -->
-        <!--     
-    <ParallaxLayer offset={1} rate={2} >
-        <img src="/laptop/2.jpg" alt="laptop2" class="laptop-2" />
-    </ParallaxLayer>
-
-    <ParallaxLayer offset={1} rate={2.5}>
-        
-    </ParallaxLayer> -->
-
-        <!-- <ParallaxLayer rate={1}>
-            <img src="/laptop/2.jpg" alt="laptop1" class="laptop-2" />
-        </ParallaxLayer> -->
-
         <ParallaxLayer rate={1}>
             <div class="laptop-1-wrap"><img src="/laptop/1.jpg" alt="laptop1" class="laptop-1" /></div>
         </ParallaxLayer>
 
         <ParallaxLayer offset={2} rate={2}>
-            <img src="/laptop/4.jpg" alt="laptop4" class="laptop-4" />
+            <img src="/laptop/4.jpg" alt="laptop4" class="laptop-4"/>
         </ParallaxLayer>
     </Parallax>
 </div>
 
 <style>
+    :global(html, body) {
+		overflow-x: hidden;
+	}
     .parallax-main {
         padding: 0 50px;
         background: #000;
@@ -95,10 +79,8 @@
     img {
         max-width: 100%;
     }
-    .gate {
-        overflow: hidden;
-    }
-    .gate img:after {
+   
+    .gate-left :after {
         content: "";
         position: absolute;
         display: flex;
@@ -119,12 +101,14 @@
         z-index: 1;
         width: 50%;
         height: 100vh;
+        background: #c9d0d6;
     }
     .gate-left {
         left: 0;
+        text-align: right;
     }
     .gate-right {
-        left: 50%;
+        text-align: left;
     }
     .laptop-1-wrap {
         text-align: center;
