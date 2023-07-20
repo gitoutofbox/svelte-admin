@@ -112,7 +112,7 @@
             url(https://res.cloudinary.com/dqifboxk5/image/upload/v1686209968/contact-us-2_y8zzx7.jpg)
                 no-repeat center;
         background-size: cover;
-        height: calc(100vh - 150px);
+        /* height: calc(100vh - 150px); */
         display: flex;
         flex-direction: column;
         align-items: center;
