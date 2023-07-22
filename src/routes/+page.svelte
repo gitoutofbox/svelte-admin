@@ -36,6 +36,8 @@
 		</Canvas>
 	</div>
 </section>
+<br />
+<br />
 
 <style>
 	.canvas-wrapper {
