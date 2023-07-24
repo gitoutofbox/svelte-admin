@@ -10,6 +10,16 @@
     let scrollY: number;
     let speed = 5;
     let windowOffsetHeight: number;
+
+    const adamHead = {
+        url: 'gltf/adamHead/adamHead.gltf', 
+        scale: 1.5,
+        position: { x: 1, y: 2 },
+        greenMesh: {
+            position: {x: 2,  y: -2 }
+        }
+    };
+
     onMount(() => {
         document.body.scrollIntoView();
         containerClassStore.set("full-width");
@@ -21,6 +31,7 @@
     onDestroy(() => {
         containerClassStore.set("");
     });
+    
 </script>
 
 <svelte:window bind:scrollY />
@@ -66,7 +77,7 @@
             <div class="three-d-row">
                 <div class="three-d-col canvas-col">
                     <Canvas>
-                        <SceneTwo />
+                        <SceneTwo model={adamHead}/>
                     </Canvas>
                 </div>
                 <div class="three-d-col">Hello</div>

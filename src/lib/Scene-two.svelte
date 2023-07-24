@@ -20,15 +20,33 @@
   import { GLTF, Float } from "@threlte/extras";
 
 
-  const shoe = {url: "gltf/shoe/shoe.gltf", scale: 20};
+  const defaultPosition = { x: 1, y: 0 };
+  const defaultGreenMesh = {position: {x: 2,  y: -1 }};
+  const shoe = {
+    url: "gltf/shoe/shoe.gltf", 
+    scale: 20
+  };
   const sheep = {url: 'gltf/sheep/Sheep.gltf', scale: 0};
   const adamHead = {url: 'gltf/adamHead/adamHead.gltf', scale: 0};
+
+  export let model: {
+    url: string, 
+    scale: number, 
+    position?: {x?: number, y?: number, z?: number},
+    greenMesh?: {
+      position?: {x?: number, y?: number, z?: number},
+    }
+  } = {...sheep};
+
+  const modelObject: any = {
+    position: {...defaultPosition}, greenMesh: {...defaultGreenMesh}, ...model
+  }
 
   // const url = "https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/models/gltf/MaterialsVariantsShoe/glTF/MaterialsVariantsShoe.gltf";
   // const url3 = "https://threejs.org/manual/examples/resources/models/animals/Sheep.gltf";
   // const url2 = "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/MaterialsVariantsShoe/glTF/MaterialsVariantsShoe.gltf";
 
-  const model = shoe;
+  // const model = shoe;
   // let model: any = null;
 
   // function loadGLTF() {
@@ -49,7 +67,7 @@
 <AmbientLight />
 
 <Float speed={5} >
-  <GLTF url={model.url} scale={model.scale} castShadow position={{ x: 1, y: 0 }} />
+  <GLTF url={modelObject.url} scale={modelObject.scale} castShadow position={modelObject.position} />
   
   
 </Float>
@@ -57,7 +75,7 @@
 <Mesh
   geometry={new BoxGeometry()}
   material={new MeshStandardMaterial({ color: "green" })}
-  position={{x: 2,  y: -1 }}
+  position={modelObject.greenMesh.position}
   scale={{ x: 10, y: 0.5, z: 10 }}
   receiveShadow
 />

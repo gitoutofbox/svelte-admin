@@ -1,9 +1,10 @@
-<script>
+<script lang="ts">
 	import Seo from "$lib/Seo.svelte";
 
 	import { Canvas } from "@threlte/core";
 	import SceneOne from "$lib/Scene-one.svelte";
 	import SceneTwo from "$lib/Scene-two.svelte";
+	const shoe: {url: string, scale: number} = {url: "gltf/shoe/shoe.gltf", scale: 20};
 </script>
 
 <h1>Welcome to SvelteKit</h1>
@@ -32,7 +33,7 @@
 
 	<div class="canvas-wrapper">
 		<Canvas>
-			<SceneTwo />
+			<SceneTwo model={shoe}/>
 		</Canvas>
 	</div>
 </section>
