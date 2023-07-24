@@ -19,11 +19,16 @@
   } from "@threlte/core";
   import { GLTF, Float } from "@threlte/extras";
 
-  const url = "https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/models/gltf/MaterialsVariantsShoe/glTF/MaterialsVariantsShoe.gltf";
-  const url2 = "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/MaterialsVariantsShoe/glTF/MaterialsVariantsShoe.gltf";
-  const url3 = "https://threejs.org/manual/examples/resources/models/animals/Sheep.gltf";
-  const url4 = "gltf/Sheep.gltf";
-  const url5 = "https://github.com/KhronosGroup/glTF-Sample-Models/blob/master/2.0/ABeautifulGame/glTF/ABeautifulGame.gltf";
+
+  const shoe = {url: "gltf/shoe/shoe.gltf", scale: 20};
+  const sheep = {url: 'gltf/sheep/Sheep.gltf', scale: 0};
+  const adamHead = {url: 'gltf/adamHead/adamHead.gltf', scale: 0};
+
+  // const url = "https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/models/gltf/MaterialsVariantsShoe/glTF/MaterialsVariantsShoe.gltf";
+  // const url3 = "https://threejs.org/manual/examples/resources/models/animals/Sheep.gltf";
+  // const url2 = "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/MaterialsVariantsShoe/glTF/MaterialsVariantsShoe.gltf";
+
+  const model = shoe;
   // let model: any = null;
 
   // function loadGLTF() {
@@ -44,7 +49,7 @@
 <AmbientLight />
 
 <Float speed={5} >
-  <GLTF url={url3} scale={0} castShadow position={{ x: 1, y: 0 }} />
+  <GLTF url={model.url} scale={model.scale} castShadow position={{ x: 1, y: 0 }} />
   
   
 </Float>
