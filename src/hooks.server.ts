@@ -14,7 +14,7 @@ declare global {
     }
 }
 
-const unProtectedRoutes = ['/', '/login', '/about', '/contact', '/parallax'];
+const unProtectedRoutes = ['/', '/login', '/about', '/contact', '/parallax', '/home'];
 export const handle = async ({ event, resolve }) => {
     const isLoggedIn = !!(event.cookies.get('isLoggedIn'));
     // const currentRoute = event.route.id;

@@ -16,10 +16,11 @@
 
 <nav class="sticky-top">
     <ul>
-        <li><a class="active" href="/" class:active={routeId === '/'}>Home</a></li>
+        <li><a class="active" href="/home" class:active={routeId === '/home'}>Home</a></li>
         <li><a href="/student/list" class:active={routeId === '/student/list' || routeId === '/student/[id]'}>Students</a></li>
         <li><a href="/contact" class:active={routeId === '/contact'}>Contact</a></li>
         <li><a href="/about" class:active={routeId === '/about'}>About</a></li>
+        <li><a class="active" href="/" class:active={routeId === '/'}>3D Test</a></li>
         <li><a href="/parallax" class:active={routeId === '/parallax'}>Prallax</a></li>
         <li class="btn-wrap">
             {#if $page?.data?.auth?.isLoggedIn}

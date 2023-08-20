@@ -123,17 +123,17 @@ main .profile:nth-child(4) {
 main .profile:nth-child(6) {
   margin-top: -70px;
 }
-footer {
+/* footer {
   height: 5%;
   color: #bdbdbd;
   display: grid;
   place-items: center;
   font-size: 12px;
-}
-footer a {
+} */
+/* footer a {
   text-decoration: none;
   color: inherit;
-}
+} */
 
 @media screen and (max-width: 1440px) {
  
